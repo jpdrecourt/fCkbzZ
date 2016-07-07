@@ -1,6 +1,6 @@
 {
   "name": "fCkbzZ",
-  "version": "0.1",
+  "version": "v0.1",
   "description": "A twitter bot that create listicles out of random Wikipedia articles",
   "private": true,
   "main": "start.js",
