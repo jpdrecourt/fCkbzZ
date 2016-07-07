@@ -7,7 +7,7 @@ let config = require('./config.js');
 let T = new Twit(config);
 
 function tweeter() {
-  let tweet = `Hello Twitter! It's ${Date()}`;
+  let tweet = `Hello Twitter! It's ${Date()}. All good here.`;
   T.post('statuses/update', {status:tweet }, tweet);
 }
 
