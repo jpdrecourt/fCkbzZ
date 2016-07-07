@@ -1,12 +1,15 @@
 {
-  "name": "openshift-cartridge-nodejs-template",
-  "version": "1.0.1",
-  "description": "Custom Node.js cartridge for OpenShift - sample application",
+  "name": "fCkbzZ",
+  "version": "0.1",
+  "description": "A twitter bot that create listicles out of random Wikipedia articles",
   "private": true,
   "main": "start.js",
   "scripts": {
     "start": "node --use_strict start.js"
   },
-  "author": "Ionut-Cristian Florescu <ionut.florescu@gmail.com>",
-  "license": "ISC"
+  "author": "Jean-Philippe Drecourt",
+  "license": "MIT",
+  "dependencies": {
+    "twit": "^2.2.4"
+  }
 }
