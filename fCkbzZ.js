@@ -20,9 +20,9 @@ class TwitterBot {
   constructor(dataSource, frequency = 60*60*1000) {
     this._T = new Twit(config);
     this.frequency = frequency;
-    this.dataSource = dataSource; // The dataSource is an object that returns an instance.
-    this.post(dataSource.instance);
-    setInterval(() => {this.post(dataSource.instance);}, frequency);
+    dataSource.getInstance(this.post);
+    this.dataSource = dataSource; // The dataSource is an object that produces instances and takes this.post as a callback function.
+    setInterval(() => {dataSource.getInstance(this.post);}, frequency);
   }
   post(tweet) {
     if (tweet !=='') {
@@ -36,19 +36,20 @@ class TwitterBot {
 
 class DataSource {
   constructor() {
-    this._instance = '';
+    this.instance = '';
   }
-  set instance(val) {this._instance = val;}
-  get instance() {return this._instance;}
 }
 
 class DateTweet extends DataSource {
   constructor() {
     super();
   }
-
-  get instance() {
-    return `Hello Twitter, it's now ${Date()} :o)`;
+  // Gets instance and passes it to the callback function
+  getInstance(callback) {
+    setTimeout(() => {
+      this.instance = `Hello Twitter, it's ${Date()} and I'm posting this asynchronously.`;
+      callback(this.instance);
+    }, 5000*Math.random());
   }
 }
 
@@ -56,14 +57,18 @@ class WikiPediaListicle extends DataSource {
   constructor() {
     super();
   }
-  get instance() {
+  getInstance(callback) {
     let url = 'https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=revisions&rvprop=content&format=json';
     request(url,  (error, response, body) => {
       if (!error && response.statusCode == 200) {
-        console.log(body);
+        callback(body);
+        return true;
+      } else {
+        console.log('Problems fetching data. Returning empty string.');
+        callback('');
+        return false;
       }
     });
-    return 'Just testing';
   }
 }
 
